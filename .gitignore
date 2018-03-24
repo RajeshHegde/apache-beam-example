@@ -1,0 +1,5 @@
+dist/
+venv/
+*.egg-info
+filtered-data.txt-*
+*.pyc
