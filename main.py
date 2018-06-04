@@ -9,13 +9,13 @@ def run():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", dest="input", required=True)
     parser.add_argument("--output", dest="output", required=True)
-    args = parser.parse_args()
+    app_args, pipeline_args = parser. parse_known_args()
 
-    with beam.Pipeline(options=PipelineOptions()) as p:
-        data = load_apache_logs(p, args.input)
+    with beam.Pipeline(options=PipelineOptions(pipeline_args)) as p:
+        data = load_apache_logs(p, app_args.input)
         output = data | "FILTER" >> beam.Filter(filter_cart_requests)
-
-        output | "WRITE" >> beam.io.WriteToText(args.output)
+        
+        output | "WRITE" >> beam.io.WriteToText(app_args.output)
 
 
 if __name__ == '__main__':
